@@ -1,27 +1,52 @@
-#include "Block.h"
+#include "Block.hpp"
+#include "const.hpp"
+#include <unordered_map>
+#include <algorithm>
 
-Block::Block(int x = NEW_BLOCK_X, int y = NEW_BLOCK_Y, BlockDirection d = BlockDirection::LEFT)
-    : nowX(x), nowY(y), direction(d)
+std::vector<BlockDirection> turnList{
+    BlockDirection::DOWN,
+    BlockDirection::RIGHT,
+    BlockDirection::UP,
+    BlockDirection::LEFT};
+
+Block::Block(Background &background, int color, int vColor,
+             int x, int y, BlockDirection d)
+    : bg(background), blockColor(color), virtualColor(vColor), nowX(x), nowY(y), direction(d)
 {
 }
 
-LongBlock::LongBlock()
-    : Block() {}
+Block::~Block() {}
 
-void LongBlock::printBlock(Background &bg)
+bool Block::turnLeft()
 {
-    if (direction == BlockDirection::DOWN || direction == BlockDirection::UP)
+    auto now = std::find(turnList.begin(), turnList.end(), direction);
+    if (now == turnList.end() - 1)
+        direction = *(turnList.begin());
+    else
+        direction = *(now + 1);
+}
+
+bool Block::turnRight()
+{
+    auto now = std::find(turnList.begin(), turnList.end(), direction);
+    if (now == turnList.begin())
+        direction = *turnList.rbegin();
+    else
+        direction = *(now - 1);
+}
+
+bool Block::turn(BlockDirection d)
+{
+    switch (d)
     {
-        bg[nowX][nowY] = '#';
-        bg[nowX + 1][nowY] = '#';
-        bg[nowX + 2][nowY] = '#';
-        bg[nowX + 3][nowY] = '#';
+    case BlockDirection::LEFT:
+        return turnLeft();
+        break;
+    case BlockDirection::RIGHT:
+        return turnRight();
+        break;
+    default:
+        break;
     }
-    else 
-    {
-        bg[nowX][nowY] = '#';
-        bg[nowX][nowY+1] = '#';
-        bg[nowX][nowY+2] = '#';
-        bg[nowX][nowY+3] = '#';
-    }
+    return false;
 }

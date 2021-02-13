@@ -1,5 +1,8 @@
-game: game.cpp background.cpp background.h
-	g++ game.cpp background.cpp -o game -Wall -I . -lncurses
+game: *.cpp head/*.hpp
+	g++ *.cpp -o game -Wall -I ./head -lncurses -lpthread -O3
+
+debug: *.cpp head/*.hpp
+	g++ *.cpp -o game -Wall -I ./head -lncurses -lpthread -g
 
 clean:
 	rm game

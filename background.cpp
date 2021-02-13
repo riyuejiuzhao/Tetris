@@ -1,33 +1,46 @@
-#include "background.h"
+#include "background.hpp"
+#include "Block.hpp"
+#include "const.hpp"
 
-Background::Background() : nowBlock(nullptr)
+Background::Background()
 {
     for (int i = 0; i < BACKGROUND_HEIGHT; ++i)
     {
+        background.push_back({});
         for (int j = 0; j < BACKGROUND_WIDTH; ++j)
         {
-            background[i][j] = DEFAULT_CONTENT;
-        }
-    }
-}
-void Background::printBackground()
-{
-    nowBlock->printBlock(*this);
-    doprintBackground();
-    refresh();
-}
-void Background::doprintBackground()
-{
-    for (int i = 0; i < BACKGROUND_HEIGHT; ++i)
-    {
-        for (int j = 0; j < BACKGROUND_WIDTH; ++j)
-        {
-            mvaddch(i + BACKGROUND_TOP, j + BACKGROUND_LEFT, background[i][j]);
+            background[i].push_back(BackgroundPoint());
         }
     }
 }
 
-char *Background::operator[](int i) { return background[i]; }
-int Background::getHeight() { return BACKGROUND_HEIGHT; }
-int Background::getWidth() { return BACKGROUND_WIDTH; }
-void Background::setNowBlock(Block *b) { nowBlock = b; };
+Background::~Background()
+{
+}
+
+void Background::printBackground(WINDOW *win)
+{
+    for (int i = BACKGROUND_HEIGHT - BACKGROUND_CEIL; i < BACKGROUND_HEIGHT; ++i)
+    {
+        for (int j = 0; j < BACKGROUND_WIDTH; ++j)
+        {
+            BackgroundPoint &temp = background[i][j];
+            wattron(win, COLOR_PAIR(temp[1]));
+            mvwaddch(win, i - BACKGROUND_CEIL, j, temp[0]);
+            wattroff(win, COLOR_PAIR(temp[1]));
+        }
+    }
+}
+
+std::vector<BackgroundPoint> &Background::operator[](int i)
+{
+    if (i >= BACKGROUND_HEIGHT)
+    {
+        return background[BACKGROUND_HEIGHT - 1];
+    }
+    else if (i < 0)
+    {
+        return background[0];
+    }
+    return background[i];
+}
