@@ -9,7 +9,7 @@ enum
     DEFAULT_CONTENT = ' ',  //背景填充
     BACKGROUND_INDEX_OFFSET = 1,
     BACKGROUND_HEIGHT_PAD = 2 * BACKGROUND_INDEX_OFFSET, //背景边框需要让出来，所以填充两位
-    BACKGROUND_WIDTH_PAD = 4 * BACKGROUND_INDEX_OFFSET, //背景边框需要让出来，所以填充两位
+    BACKGROUND_WIDTH_PAD = 2 * BACKGROUND_INDEX_OFFSET, //背景边框需要让出来，所以填充两位
     //新方块的位置
     NEW_BLOCK_X = 0 + BACKGROUND_CEIL, //距离顶端的距离
     NEW_BLOCK_Y = 10,                  //距离边缘的距离

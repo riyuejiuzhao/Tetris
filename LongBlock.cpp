@@ -1,7 +1,7 @@
 #include "Block.hpp"
 
 LongBlock::LongBlock(Background &background)
-    : Block(background, BLOCK_BLUE, BLOCK_VIRTURL_BLUE,NEW_LONG_BLOCK_X,NEW_LONG_BLOCK_Y) {}
+    : Block(background, BLOCK_BLUE, BLOCK_VIRTURL_BLUE, NEW_LONG_BLOCK_X, NEW_LONG_BLOCK_Y) {}
 
 void LongBlock::printBlock(WINDOW *win)
 {
@@ -17,7 +17,7 @@ inline bool LongBlock::canMoveDown()
 
 bool LongBlock::canMoveDown(int x, int y)
 {
-    return canMove(x + 1, y);
+    return canMove(x + 1, y,direction);
 }
 
 void LongBlock::printInNow(WINDOW *win)
@@ -56,31 +56,31 @@ void LongBlock::printInNow(WINDOW *win)
     }
     else if (direction == BlockDirection::RIGHT)
     {
-        mvwaddch(win, x - 5, y, blockChar);
-        mvwaddch(win, x - 4, y, blockChar);
-
-        mvwaddch(win, x - 3, y, blockChar);
+        mvwaddch(win, x - 2, y - 1, blockChar);
         mvwaddch(win, x - 2, y, blockChar);
 
+        mvwaddch(win, x - 1, y - 1, blockChar);
         mvwaddch(win, x - 1, y, blockChar);
+
+        mvwaddch(win, x, y - 1, blockChar);
         mvwaddch(win, x, y, blockChar);
 
+        mvwaddch(win, x + 1, y - 1, blockChar);
         mvwaddch(win, x + 1, y, blockChar);
-        mvwaddch(win, x + 2, y, blockChar);
     }
     else //left
     {
-        mvwaddch(win, x - 2, y, blockChar);
         mvwaddch(win, x - 1, y, blockChar);
+        mvwaddch(win, x - 1, y + 1, blockChar);
 
         mvwaddch(win, x, y, blockChar);
+        mvwaddch(win, x, y + 1, blockChar);
+
         mvwaddch(win, x + 1, y, blockChar);
+        mvwaddch(win, x + 1, y + 1, blockChar);
 
         mvwaddch(win, x + 2, y, blockChar);
-        mvwaddch(win, x + 3, y, blockChar);
-
-        mvwaddch(win, x + 4, y, blockChar);
-        mvwaddch(win, x + 5, y, blockChar);
+        mvwaddch(win, x + 2, y + 1, blockChar);
     }
     wattroff(win, COLOR_PAIR(blockColor));
 }
@@ -129,31 +129,31 @@ void LongBlock::printInBottom(WINDOW *win)
     }
     else if (direction == BlockDirection::RIGHT)
     {
-        mvwaddch(win, x - 5, y, blockCharLeft);
-        mvwaddch(win, x - 4, y, blockCharRight);
-
-        mvwaddch(win, x - 3, y, blockCharLeft);
+        mvwaddch(win, x - 2, y - 1, blockCharLeft);
         mvwaddch(win, x - 2, y, blockCharRight);
 
-        mvwaddch(win, x - 1, y, blockCharLeft);
+        mvwaddch(win, x - 1, y - 1, blockCharLeft);
+        mvwaddch(win, x - 1, y, blockCharRight);
+
+        mvwaddch(win, x, y - 1, blockCharLeft);
         mvwaddch(win, x, y, blockCharRight);
 
-        mvwaddch(win, x + 1, y, blockCharLeft);
-        mvwaddch(win, x + 2, y, blockCharRight);
+        mvwaddch(win, x + 1, y - 1, blockCharLeft);
+        mvwaddch(win, x + 1, y, blockCharRight);
     }
     else //left
     {
-        mvwaddch(win, x - 2, y, blockCharLeft);
-        mvwaddch(win, x - 1, y, blockCharRight);
+        mvwaddch(win, x - 1, y, blockCharLeft);
+        mvwaddch(win, x - 1, y + 1, blockCharRight);
 
         mvwaddch(win, x, y, blockCharLeft);
-        mvwaddch(win, x + 1, y, blockCharRight);
+        mvwaddch(win, x, y + 1, blockCharRight);
+
+        mvwaddch(win, x + 1, y, blockCharLeft);
+        mvwaddch(win, x + 1, y + 1, blockCharRight);
 
         mvwaddch(win, x + 2, y, blockCharLeft);
-        mvwaddch(win, x + 3, y, blockCharRight);
-
-        mvwaddch(win, x + 4, y, blockCharLeft);
-        mvwaddch(win, x + 5, y, blockCharRight);
+        mvwaddch(win, x + 2, y + 1, blockCharRight);
     }
     wattroff(win, COLOR_PAIR(virtualColor));
 }
@@ -207,31 +207,31 @@ void LongBlock::stopMove()
     }
     else if (direction == BlockDirection::RIGHT)
     {
-        bg[x - 5][y] = temp;
-        bg[x - 4][y] = temp;
-
-        bg[x - 3][y] = temp;
+        bg[x - 2][y - 1] = temp;
         bg[x - 2][y] = temp;
 
+        bg[x - 1][y - 1] = temp;
         bg[x - 1][y] = temp;
+
+        bg[x][y - 1] = temp;
         bg[x][y] = temp;
 
-        bg[x][y + 1] = temp;
-        bg[x][y + 2] = temp;
+        bg[x + 1][y - 1] = temp;
+        bg[x + 1][y] = temp;
     }
     else //left
     {
-        bg[x - 2][y] = temp;
         bg[x - 1][y] = temp;
+        bg[x - 1][y + 1] = temp;
 
         bg[x][y] = temp;
+        bg[x][y + 1] = temp;
+
         bg[x + 1][y] = temp;
+        bg[x + 1][y + 1] = temp;
 
         bg[x + 2][y] = temp;
-        bg[x + 3][y] = temp;
-
-        bg[x + 4][y] = temp;
-        bg[x + 5][y] = temp;
+        bg[x + 2][y + 1] = temp;
     }
 }
 
@@ -253,7 +253,7 @@ bool LongBlock::move(BlockDirection t)
 
 bool LongBlock::canMoveRight()
 {
-    return canMove(nowX, nowY + 2);
+    return canMove(nowX, nowY + 2,direction);
 }
 
 bool LongBlock::moveRight()
@@ -266,7 +266,7 @@ bool LongBlock::moveRight()
 
 bool LongBlock::canMoveLeft()
 {
-    return canMove(nowX, nowY - 2);
+    return canMove(nowX, nowY - 2,direction);
 }
 
 bool LongBlock::moveLeft()
@@ -289,9 +289,9 @@ inline bool inBackground(int minX, int maxX, int minY, int maxY)
            minY >= 0 && maxY < BACKGROUND_WIDTH && minY <= maxY;
 }
 
-bool LongBlock::canMove(int x, int y)
+bool LongBlock::canMove(int x, int y,BlockDirection d)
 {
-    if (direction == BlockDirection::DOWN)
+    if (d == BlockDirection::DOWN)
     {
         return inBackground(x, x, y - 2, y + 5) &&
                bg[x][y - 2].isEmpty() &&
@@ -306,7 +306,7 @@ bool LongBlock::canMove(int x, int y)
                bg[x][y + 4].isEmpty() &&
                bg[x][y + 5].isEmpty();
     }
-    else if (direction == BlockDirection::UP)
+    else if (d == BlockDirection::UP)
     {
         return inBackground(x, x, y - 4, y + 2) &&
                bg[x][y - 5].isEmpty() &&
@@ -321,34 +321,108 @@ bool LongBlock::canMove(int x, int y)
                bg[x][y + 1].isEmpty() &&
                bg[x][y + 2].isEmpty();
     }
-    else if (direction == BlockDirection::RIGHT)
+    else if (d == BlockDirection::RIGHT)
     {
-        return inBackground(x - 5, x + 2, y, y) &&
-               bg[x - 5][y].isEmpty() &&
-               bg[x - 4][y].isEmpty() &&
-
-               bg[x - 3][y].isEmpty() &&
+        return inBackground(x - 2, x + 1, y - 1, y) &&
+               bg[x - 2][y - 1].isEmpty() &&
                bg[x - 2][y].isEmpty() &&
 
+               bg[x - 1][y - 1].isEmpty() &&
                bg[x - 1][y].isEmpty() &&
+
+               bg[x][y - 1].isEmpty() &&
                bg[x][y].isEmpty() &&
 
-               bg[x + 1][y].isEmpty() &&
-               bg[x + 2][y].isEmpty();
+               bg[x + 1][y - 1].isEmpty() &&
+               bg[x + 1][y].isEmpty();
     }
     else //left
     {
-        return inBackground(x - 2, x + 5, y, y) &&
-               bg[x - 2][y].isEmpty() &&
+        return inBackground(x - 1, x + 2, y, y + 1) &&
                bg[x - 1][y].isEmpty() &&
+               bg[x - 1][y + 1].isEmpty() &&
 
                bg[x][y].isEmpty() &&
+               bg[x][y + 1].isEmpty() &&
+
                bg[x + 1][y].isEmpty() &&
+               bg[x + 1][y + 1].isEmpty() &&
 
                bg[x + 2][y].isEmpty() &&
-               bg[x + 3][y].isEmpty() &&
-
-               bg[x + 4][y].isEmpty() &&
-               bg[x + 5][y].isEmpty();
+               bg[x + 2][y + 1].isEmpty();
     }
+}
+
+bool LongBlock::turn(BlockDirection t)
+{
+    if (t == BlockDirection::LEFT)
+        return turnLeft();
+    else if (t == BlockDirection::RIGHT)
+        return turnRight();
+    else
+        return false;
+}
+
+bool LongBlock::turnLeft()
+{
+    if(direction == BlockDirection::DOWN)
+    {
+        direction = BlockDirection::LEFT;
+        nowY += 2;
+        return true;
+    }
+    else if(direction == BlockDirection::LEFT)
+    {
+        direction = BlockDirection::UP;
+        nowX += 1;
+        nowY += 1;
+        return true;
+    }
+    else if(direction == BlockDirection::UP)
+    {
+        direction = BlockDirection::RIGHT;
+        nowY -= 2;
+        return true;
+    }
+    else if(direction==BlockDirection::RIGHT)
+    {
+        direction = BlockDirection::DOWN;
+        nowX -= 1;
+        nowY -= 1;
+        return true;
+    }
+    else
+        return false;
+}
+
+bool LongBlock::turnRight()
+{
+    if(direction == BlockDirection::DOWN)
+    {
+        direction = BlockDirection::RIGHT;
+        nowX += 1;
+        nowY += 1;
+        return true;
+    }
+    else if(direction == BlockDirection::LEFT)
+    {
+        direction = BlockDirection::DOWN;
+        nowY -= 2;
+        return true;
+    }
+    else if(direction == BlockDirection::UP)
+    {
+        direction = BlockDirection::LEFT;
+        nowX -= 1;
+        nowY -= 1;
+        return true;
+    }
+    else if(direction==BlockDirection::RIGHT)
+    {
+        direction = BlockDirection::UP;
+        nowY += 2;
+        return true;
+    }
+    else
+        return false;
 }

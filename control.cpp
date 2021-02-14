@@ -36,8 +36,15 @@ void *keyboardControlProcess(void *arg)
             break;
         case KEY_DOWN:
             now->turn(BlockDirection::LEFT);
+            bg.printBackground(gameMainWin);
+            now->printBlock(gameMainWin);
+            wrefresh(gameMainWin);
+            break;
         case KEY_UP:
             now->turn(BlockDirection::RIGHT);
+            bg.printBackground(gameMainWin);
+            now->printBlock(gameMainWin);
+            wrefresh(gameMainWin);
             break;
         case ' ':
             now->moveToBottom();
@@ -51,9 +58,9 @@ void *keyboardControlProcess(void *arg)
             break;
         }
         char message[100];
-        sprintf(message,"                ");
+        sprintf(message,"                             \n                             ");
         mvaddstr(0,0,message);
-        sprintf(message,"x:%d, y:%d",now->nowX,now->nowY);
+        sprintf(message,"%s\n, x:%d, y:%d",now->getDirection().c_str(),now->getX(),now->getY());
         mvaddstr(0,0,message);
         pthread_mutex_unlock(&blockLock);
     }
