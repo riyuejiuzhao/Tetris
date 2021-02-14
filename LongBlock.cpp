@@ -1,4 +1,4 @@
-#include "Block.hpp"
+#include "LongBlock.hpp"
 
 LongBlock::LongBlock(Background &background)
     : Block(background, BLOCK_BLUE, BLOCK_VIRTURL_BLUE, NEW_LONG_BLOCK_X, NEW_LONG_BLOCK_Y) {}
@@ -17,7 +17,7 @@ inline bool LongBlock::canMoveDown()
 
 bool LongBlock::canMoveDown(int x, int y)
 {
-    return canMove(x + 1, y,direction);
+    return canMove(x + 1, y, direction);
 }
 
 void LongBlock::printInNow(WINDOW *win)
@@ -253,7 +253,7 @@ bool LongBlock::move(BlockDirection t)
 
 bool LongBlock::canMoveRight()
 {
-    return canMove(nowX, nowY + 2,direction);
+    return canMove(nowX, nowY + 2, direction);
 }
 
 bool LongBlock::moveRight()
@@ -266,7 +266,7 @@ bool LongBlock::moveRight()
 
 bool LongBlock::canMoveLeft()
 {
-    return canMove(nowX, nowY - 2,direction);
+    return canMove(nowX, nowY - 2, direction);
 }
 
 bool LongBlock::moveLeft()
@@ -289,7 +289,7 @@ inline bool inBackground(int minX, int maxX, int minY, int maxY)
            minY >= 0 && maxY < BACKGROUND_WIDTH && minY <= maxY;
 }
 
-bool LongBlock::canMove(int x, int y,BlockDirection d)
+bool LongBlock::canMove(int x, int y, BlockDirection d)
 {
     if (d == BlockDirection::DOWN)
     {
@@ -363,65 +363,78 @@ bool LongBlock::turn(BlockDirection t)
         return false;
 }
 
+inline bool LongBlock::childTurn(int to, int ox, int oy, BlockDirection dir)
+{
+    return grandChildTurn(to, 0, ox, oy, dir) ||
+           grandChildTurn(to, 1, ox, oy, dir) ||
+           grandChildTurn(to, 2, ox, oy, dir) ||
+           grandChildTurn(to, 3, ox, oy, dir) ||
+           grandChildTurn(to, 4, ox, oy, dir);
+}
+
+inline bool LongBlock::grandChildTurn(int to, int index, int ox, int oy, BlockDirection dir)
+{
+    if (canMove(nowX + ox + getIWallKickX(to, index),
+                nowY + oy + getIWallKickY(to, index), dir))
+    {
+        nowX = nowX + ox + getIWallKickX(to, index);
+        nowY = nowY + oy + getIWallKickY(to, index);
+        direction = dir;
+        return true;
+    }
+    return false;
+}
+
 bool LongBlock::turnLeft()
 {
-    if(direction == BlockDirection::DOWN)
+    int ox, oy;
+    if (direction == ZERO)
     {
-        direction = BlockDirection::LEFT;
-        nowY += 2;
-        return true;
+        ox = 1, oy = 1;
+        return childTurn(ZERO_TO_L, ox, oy, L);
     }
-    else if(direction == BlockDirection::LEFT)
+    else if (direction == L)
     {
-        direction = BlockDirection::UP;
-        nowX += 1;
-        nowY += 1;
-        return true;
+        ox = 0, oy = 2;
+        return childTurn(L_TO_TWO, ox, oy, TWO);
     }
-    else if(direction == BlockDirection::UP)
+    else if (direction == TWO)
     {
-        direction = BlockDirection::RIGHT;
-        nowY -= 2;
-        return true;
+        ox = -1, oy = -1;
+        return childTurn(TWO_TO_R, ox, oy, TWO);
     }
-    else if(direction==BlockDirection::RIGHT)
+    else if (direction == R)
     {
-        direction = BlockDirection::DOWN;
-        nowX -= 1;
-        nowY -= 1;
-        return true;
+        ox = 0, oy = -2;
+        return childTurn(R_TO_ZERO, ox, oy, ZERO);
     }
     else
         return false;
 }
 
+//由于I块的中心点不在块上，所以会调整nowX，nowY
 bool LongBlock::turnRight()
 {
-    if(direction == BlockDirection::DOWN)
+    int ox, oy;
+    if (direction == ZERO) // 0 -> R
     {
-        direction = BlockDirection::RIGHT;
-        nowX += 1;
-        nowY += 1;
-        return true;
+        ox = 0, oy = 2;
+        return childTurn(ZERO_TO_R, ox, oy, R);
     }
-    else if(direction == BlockDirection::LEFT)
+    else if (direction == L) // L -> 0
     {
-        direction = BlockDirection::DOWN;
-        nowY -= 2;
-        return true;
+        ox = -1, oy = -1;
+        return childTurn(L_TO_ZERO, ox, oy, ZERO);
     }
-    else if(direction == BlockDirection::UP)
+    else if (direction == R) // R -> 2
     {
-        direction = BlockDirection::LEFT;
-        nowX -= 1;
-        nowY -= 1;
-        return true;
+        ox = 1, oy = 1;
+        return childTurn(R_TO_TWO, ox, oy, TWO);
     }
-    else if(direction==BlockDirection::RIGHT)
+    else if (direction == TWO) // 2 -> L
     {
-        direction = BlockDirection::UP;
-        nowY += 2;
-        return true;
+        ox = 0, oy = -2;
+        return childTurn(TWO_TO_L, ox, oy, L);
     }
     else
         return false;

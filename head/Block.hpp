@@ -11,10 +11,10 @@ class Background;
 //这里，方向是指的，相对于中心点，主体的方向
 enum class BlockDirection
 {
-    DOWN,
-    LEFT,
-    UP,
-    RIGHT,
+    DOWN, //0
+    LEFT, //R
+    RIGHT, //L
+    UP, //2
 };
 enum class BlockType
 {
@@ -74,30 +74,57 @@ public:
     }
 };
 
-class LongBlock : public Block
-{
-    inline bool canMoveDown() override;
-    bool canMoveDown(int x, int y) override;
-    void printInNow(WINDOW *win) override;
-    void printInBottom(WINDOW *win) override;
-    bool canMoveRight() override;
-    bool canMoveLeft() override;
-    bool moveDown() override;
-    bool moveRight() override;
-    bool moveLeft() override;
-    bool canMove(int x, int y,BlockDirection d) override;
-    bool turnLeft() override;
-    bool turnRight() override;
 
-public:
-    ~LongBlock();
-    LongBlock(Background &bg);
-    void printBlock(WINDOW *win) override;
-    BlockType getType() override;
-    void stopMove() override;
-    bool move(BlockDirection t) override;
-    void moveToBottom() override;
-    bool turn(BlockDirection t) override;
+//为了用来旋转，定义的常量
+//由于之前设置的和 俄罗斯方块规则中的不一样，所以重新定义一下
+const BlockDirection ZERO = BlockDirection::DOWN;
+const BlockDirection L = BlockDirection::RIGHT;
+const BlockDirection R = BlockDirection::LEFT;
+const BlockDirection TWO = BlockDirection::UP;
+
+const int JLSTZBlockWillKicks[8][5][2] =
+    {
+        {{0, 0}, {-1, 0}, {-1, 1}, {0, -2}, {-1, -2}},
+        {{0, 0}, {1, 0}, {1, -1}, {0, 2}, {1, 2}},
+        {{0, 0}, {1, 0}, {1, -1}, {0, 2}, {1, 2}},
+        {{0, 0}, {-1, 0}, {-1, 1}, {0, -2}, {-1, -2}},
+        {{0, 0}, {1, 0}, {1, 1}, {0, -2}, {1, -2}},
+        {{0, 0}, {-1, 0}, {-1, -1}, {0, 2}, {-1, 2}},
+        {{0, 0}, {-1, 0}, {-1, -1}, {0, 2}, {-1, 2}},
+        {{0, 0}, {1, 0}, {1, 1}, {0, -2}, {1, -2}},
 };
+
+const int IBlockWillKicks[8][5][2] =
+    {
+        {{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}}, //0->R
+        {{0, 0}, {2, 0}, {-1, 0}, {2, 1}, {-1, -2}}, //R->0
+        {{0, 0}, {-1, 0}, {2, 0}, {-1, 2}, {2, -1}}, //R->2
+        {{0, 0}, {1, 0}, {-2, 0}, {1, -2}, {-2, 1}}, //2->R
+        {{0, 0}, {2, 0}, {-1, 0}, {2, 1}, {-1, -2}}, //2->L
+        {{0, 0}, {-2, 0}, {1, 0}, {-2, -1}, {1, 2}}, //L->2
+        {{0, 0}, {1, 0}, {-2, 0}, {1, -2}, {-2, 1}}, //L->0
+        {{0, 0}, {-1, 0}, {2, 0}, {-1, 2}, {2, -1}}, //0->L
+};
+
+inline int getIWallKickX(int d, int i)
+{
+    return IBlockWillKicks[d][i][1];
+}
+
+inline int getIWallKickY(int d, int i)
+{
+    return IBlockWillKicks[d][i][0] * 2;
+}
+
+inline int getJLSTZWallKickX(int d, int i)
+{
+    return JLSTZBlockWillKicks[d][i][1];
+}
+
+inline int getJLSTZWallKickY(int d, int i)
+{
+    return JLSTZBlockWillKicks[d][i][0] * 2;
+}
+
 
 #endif
