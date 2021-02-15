@@ -11,15 +11,16 @@ class Background;
 //这里，方向是指的，相对于中心点，主体的方向
 enum class BlockDirection
 {
-    DOWN, //0
-    LEFT, //R
+    DOWN,  //0
+    LEFT,  //R
     RIGHT, //L
-    UP, //2
+    UP,    //2
 };
 enum class BlockType
 {
     Long,
     T,
+    J,
 };
 
 class Block
@@ -33,36 +34,38 @@ protected:
     Block(Background &background, int color, int virtualColor,
           int x = NEW_BLOCK_X, int y = NEW_BLOCK_Y,
           BlockDirection d = BlockDirection::DOWN);
-    inline virtual bool canMoveDown() = 0;
-    virtual bool canMoveDown(int x, int y) = 0;
+    inline bool canMoveDown(int x, int y) { return canMove(x + 1, y, direction); }
+    inline bool canMoveDown() { return canMoveDown(nowX, nowY); }
+    inline bool canMoveRight() { return canMove(nowX, nowY + 2, direction); }
+    inline bool canMoveLeft() { return canMove(nowX, nowY - 2, direction); }
+    bool moveDown();
+    bool moveRight();
+    bool moveLeft();
     virtual void printInNow(WINDOW *win) = 0;
     virtual void printInBottom(WINDOW *win) = 0;
-    virtual bool canMoveRight() = 0;
-    virtual bool canMoveLeft() = 0;
-    virtual bool moveDown() = 0;
-    virtual bool moveRight() = 0;
-    virtual bool moveLeft() = 0;
-    virtual bool canMove(int x, int y,BlockDirection d) = 0;
-    virtual bool turnLeft() = 0;
-    virtual bool turnRight() = 0;
+    virtual bool canMove(int x, int y, BlockDirection d) = 0;
+    //这两个函数I型需要重置，别的不需要
+    virtual bool turnLeft();
+    virtual bool turnRight();
 
 public:
     virtual ~Block();
-    virtual void printBlock(WINDOW *win) = 0;
-    virtual bool move(BlockDirection t) = 0;
-    virtual void moveToBottom() = 0;
-    virtual bool turn(BlockDirection d) = 0;
+    void printBlock(WINDOW *win);
+    bool move(BlockDirection t);
+    void moveToBottom();
+    bool turn(BlockDirection d);
+
     virtual BlockType getType() = 0;
     virtual void stopMove() = 0; //写入背景
 
     //辅助函数用来实现turn的, I型块用自己的，其余的用这个
-    friend inline bool originGrandChildTurn(Block *t, int to, int index, int ox, int oy, BlockDirection dir);
-    friend inline bool originChildTurn(Block *t, int to, int ox, int oy, BlockDirection dir);
+    friend bool originGrandChildTurn(Block *t, int to, int index, int ox, int oy, BlockDirection dir);
+    friend bool originChildTurn(Block *t, int to, int ox, int oy, BlockDirection dir);
 
-    //两个用来debug的函数
-    int getX() { return nowX; }
-    int getY() { return nowY; }
-    std::string getDirection()
+    //3个用来debug的函数
+    inline int getX() { return nowX; }
+    inline int getY() { return nowY; }
+    inline std::string getDirection()
     {
         switch (direction)
         {
@@ -79,6 +82,9 @@ public:
         }
     }
 };
+
+bool originGrandChildTurn(Block *t, int to, int index, int ox, int oy, BlockDirection dir);
+bool originChildTurn(Block *t, int to, int ox, int oy, BlockDirection dir);
 
 //为了用来旋转，定义的常量
 //由于之前设置的和 俄罗斯方块规则中的不一样，所以重新定义一下
@@ -137,6 +143,4 @@ inline bool inBackground(int minX, int maxX, int minY, int maxY)
            minY >= 0 && maxY < BACKGROUND_WIDTH && minY <= maxY;
 }
 
-inline bool originGrandChildTurn(Block *t, int to, int index, int ox, int oy, BlockDirection dir);
-inline bool originChildTurn(Block *t, int to, int ox, int oy, BlockDirection dir);
 #endif

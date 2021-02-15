@@ -1,17 +1,17 @@
 #pragma once
-#ifndef TBLOCK_H
-#define TBLOCK_H
+#ifndef JBLOCK_H
+#define JBLOCK_H
 #include "Block.hpp"
 
-class TBlock : public Block
+class JBlock : public Block
 {
     void printInNow(WINDOW *win) override;
     void printInBottom(WINDOW *win) override;
     bool canMove(int x, int y, BlockDirection d) override;
 
 public:
-    ~TBlock();
-    TBlock(Background &bg);
+    ~JBlock();
+    JBlock(Background &bg);
     BlockType getType() override;
     void stopMove() override;
 };

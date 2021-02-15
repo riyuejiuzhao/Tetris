@@ -1,4 +1,5 @@
 #include "control.hpp"
+#include "TBlock.hpp"
 #include <unistd.h>
 #include <assert.h>
 
@@ -11,7 +12,19 @@ WINDOW *gameMainWin = nullptr; //放方块的地方
 //后面还需要在修改
 Block *getNextBlock()
 {
-    return new LongBlock(bg);
+    Block *temp;
+    static int i=1;
+    if(i==0)
+    {
+        i=1;
+        temp = new LongBlock(bg);
+    }
+    else
+    {
+        i=0;
+        temp = new TBlock(bg);
+    }
+    return temp;
 }
 
 void *keyboardControlProcess(void *arg)
@@ -52,6 +65,7 @@ void *keyboardControlProcess(void *arg)
             delete now;
             now = getNextBlock();
             bg.printBackground(gameMainWin);
+            now->printBlock(gameMainWin);
             wrefresh(gameMainWin);
             break;
         default:
@@ -85,15 +99,17 @@ void gameMainProcess()
     while (1)
     {
         pthread_mutex_lock(&blockLock);
-        bg.printBackground(gameMainWin);
-        now->printBlock(gameMainWin);
-        wrefresh(gameMainWin);
+
         if (!now->move(BlockDirection::DOWN))
         {
             now->stopMove();
             delete now;
             now = getNextBlock();
         }
+        bg.printBackground(gameMainWin);
+        now->printBlock(gameMainWin);
+        wrefresh(gameMainWin);
+
         pthread_mutex_unlock(&blockLock);
         sleep(1);
     }

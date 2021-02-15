@@ -1,24 +1,9 @@
 #include "LongBlock.hpp"
 
 LongBlock::LongBlock(Background &background)
-    : Block(background, BLOCK_BLUE, BLOCK_VIRTURL_BLUE, NEW_LONG_BLOCK_X, NEW_LONG_BLOCK_Y) {}
+    : Block(background, BLOCK_CYAN, BLOCK_VIRTURL_CYAN, NEW_LONG_BLOCK_X, NEW_LONG_BLOCK_Y) {}
 
-void LongBlock::printBlock(WINDOW *win)
-{
-    printInBottom(win);
-    printInNow(win);
-}
-
-inline bool LongBlock::canMoveDown()
-{
-
-    return canMoveDown(nowX, nowY);
-}
-
-bool LongBlock::canMoveDown(int x, int y)
-{
-    return canMove(x + 1, y, direction);
-}
+LongBlock::~LongBlock() {}
 
 void LongBlock::printInNow(WINDOW *win)
 {
@@ -98,7 +83,7 @@ void LongBlock::printInBottom(WINDOW *win)
     x = x + BACKGROUND_CEIL - BACKGROUND_HEIGHT;
     int y = nowY;
 
-    wattron(win, COLOR_PAIR(BLOCK_VIRTURL_BLUE));
+    wattron(win, COLOR_PAIR(virtualColor));
     if (direction == BlockDirection::DOWN)
     {
         mvwaddch(win, x, y - 2, blockCharLeft);
@@ -158,24 +143,14 @@ void LongBlock::printInBottom(WINDOW *win)
     wattroff(win, COLOR_PAIR(virtualColor));
 }
 
-bool LongBlock::moveDown()
-{
-    if (!canMoveDown())
-        return false;
-    ++nowX;
-    return true;
-}
-
 BlockType LongBlock::getType()
 {
     return BlockType::Long;
 }
 
-LongBlock::~LongBlock() {}
-
 void LongBlock::stopMove()
 {
-    BackgroundPoint temp(BLOCK_BLUE, ' ');
+    BackgroundPoint temp(blockColor, ' ');
     int x = nowX, y = nowY;
     if (direction == BlockDirection::DOWN)
     {
@@ -233,54 +208,6 @@ void LongBlock::stopMove()
         bg[x + 2][y] = temp;
         bg[x + 2][y + 1] = temp;
     }
-}
-
-bool LongBlock::move(BlockDirection t)
-{
-    switch (t)
-    {
-    case BlockDirection::RIGHT:
-        return moveRight();
-    case BlockDirection::LEFT:
-        return moveLeft();
-    case BlockDirection::DOWN:
-        return moveDown();
-    default:
-        return false;
-        break;
-    }
-}
-
-bool LongBlock::canMoveRight()
-{
-    return canMove(nowX, nowY + 2, direction);
-}
-
-bool LongBlock::moveRight()
-{
-    if (!canMoveRight())
-        return false;
-    nowY += 2;
-    return true;
-}
-
-bool LongBlock::canMoveLeft()
-{
-    return canMove(nowX, nowY - 2, direction);
-}
-
-bool LongBlock::moveLeft()
-{
-    if (!canMoveLeft())
-        return false;
-    nowY -= 2;
-    return true;
-}
-
-inline void LongBlock::moveToBottom()
-{
-    while (moveDown())
-        ;
 }
 
 bool LongBlock::canMove(int x, int y, BlockDirection d)
@@ -345,16 +272,6 @@ bool LongBlock::canMove(int x, int y, BlockDirection d)
                bg[x + 2][y].isEmpty() &&
                bg[x + 2][y + 1].isEmpty();
     }
-}
-
-bool LongBlock::turn(BlockDirection t)
-{
-    if (t == BlockDirection::LEFT)
-        return turnLeft();
-    else if (t == BlockDirection::RIGHT)
-        return turnRight();
-    else
-        return false;
 }
 
 inline bool LongBlock::childTurn(int to, int ox, int oy, BlockDirection dir)

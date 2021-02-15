@@ -25,12 +25,14 @@ enum
     //定义背景颜色
     BACKGROUND_COLOR = 0,
     //方块颜色
-    BLOCK_BLUE = 1,
+    BLOCK_CYAN = 1,
     BLOCK_MAGENTA = 2,
+    BLOCK_BLUE = 3,
     //这里时方块还没有落下时，
     //程序给玩家一个预览
-    BLOCK_VIRTURL_BLUE = 11,
+    BLOCK_VIRTURL_CYAN = 11,
     BLOCK_VIRTURL_MAGENTA = 12,
+    BLOCK_VIRTURL_BLUE = 13,
     //Wall Kick
     ZERO_TO_R = 0,
     R_TO_ZERO = 1,
