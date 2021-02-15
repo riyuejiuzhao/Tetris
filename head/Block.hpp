@@ -18,7 +18,8 @@ enum class BlockDirection
 };
 enum class BlockType
 {
-    Long
+    Long,
+    T,
 };
 
 class Block
@@ -53,6 +54,11 @@ public:
     virtual bool turn(BlockDirection d) = 0;
     virtual BlockType getType() = 0;
     virtual void stopMove() = 0; //写入背景
+
+    //辅助函数用来实现turn的, I型块用自己的，其余的用这个
+    friend inline bool originGrandChildTurn(Block *t, int to, int index, int ox, int oy, BlockDirection dir);
+    friend inline bool originChildTurn(Block *t, int to, int ox, int oy, BlockDirection dir);
+
     //两个用来debug的函数
     int getX() { return nowX; }
     int getY() { return nowY; }
@@ -73,7 +79,6 @@ public:
         }
     }
 };
-
 
 //为了用来旋转，定义的常量
 //由于之前设置的和 俄罗斯方块规则中的不一样，所以重新定义一下
@@ -126,5 +131,12 @@ inline int getJLSTZWallKickY(int d, int i)
     return JLSTZBlockWillKicks[d][i][0] * 2;
 }
 
+inline bool inBackground(int minX, int maxX, int minY, int maxY)
+{
+    return minX >= 0 && maxX < BACKGROUND_HEIGHT && minX <= maxX &&
+           minY >= 0 && maxY < BACKGROUND_WIDTH && minY <= maxY;
+}
 
+inline bool originGrandChildTurn(Block *t, int to, int index, int ox, int oy, BlockDirection dir);
+inline bool originChildTurn(Block *t, int to, int ox, int oy, BlockDirection dir);
 #endif

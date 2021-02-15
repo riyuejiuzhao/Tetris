@@ -277,16 +277,10 @@ bool LongBlock::moveLeft()
     return true;
 }
 
-void LongBlock::moveToBottom()
+inline void LongBlock::moveToBottom()
 {
     while (moveDown())
         ;
-}
-
-inline bool inBackground(int minX, int maxX, int minY, int maxY)
-{
-    return minX >= 0 && maxX < BACKGROUND_HEIGHT && minX <= maxX &&
-           minY >= 0 && maxY < BACKGROUND_WIDTH && minY <= maxY;
 }
 
 bool LongBlock::canMove(int x, int y, BlockDirection d)

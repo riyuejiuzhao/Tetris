@@ -1,3 +1,6 @@
+#pragma once
+#ifndef LONGBLOCK_H
+#define LONGBLOCK_H
 #include "Block.hpp"
 
 class LongBlock : public Block
@@ -15,8 +18,8 @@ class LongBlock : public Block
     bool turnLeft() override;
     bool turnRight() override;
     //辅助函数用来实现turn的
-    inline bool grandChildTurn(int to, int index, int ox, int oy, BlockDirection dir);
-    inline bool childTurn(int to, int ox, int oy, BlockDirection dir);
+    bool grandChildTurn(int to, int index, int ox, int oy, BlockDirection dir);
+    bool childTurn(int to, int ox, int oy, BlockDirection dir);
 
 public:
     ~LongBlock();
@@ -28,3 +31,4 @@ public:
     void moveToBottom() override;
     bool turn(BlockDirection t) override;
 };
+#endif

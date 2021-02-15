@@ -1,7 +1,9 @@
 #pragma once
+
 #include <vector>
 #include <Block.hpp>
 
+//用来定义常量，预处理器报错难以识别，所以我不太喜欢用#define
 enum
 {
     BACKGROUND_HEIGHT = 40, //背景高度
@@ -24,13 +26,11 @@ enum
     BACKGROUND_COLOR = 0,
     //方块颜色
     BLOCK_BLUE = 1,
-    BLOCK_RED = 2,
-    BLOCK_GREEN = 3,
-    BLOCK_YELLOW = 4,
-    BLOCK_WHITE = 5,
+    BLOCK_MAGENTA = 2,
     //这里时方块还没有落下时，
     //程序给玩家一个预览
-    BLOCK_VIRTURL_BLUE = 6,
+    BLOCK_VIRTURL_BLUE = 11,
+    BLOCK_VIRTURL_MAGENTA = 12,
     //Wall Kick
     ZERO_TO_R = 0,
     R_TO_ZERO = 1,
