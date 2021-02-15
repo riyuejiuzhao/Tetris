@@ -28,11 +28,13 @@ enum
     BLOCK_CYAN = 1,
     BLOCK_MAGENTA = 2,
     BLOCK_BLUE = 3,
+    BLOCK_YELLOW = 4,
     //这里时方块还没有落下时，
     //程序给玩家一个预览
     BLOCK_VIRTURL_CYAN = 11,
     BLOCK_VIRTURL_MAGENTA = 12,
     BLOCK_VIRTURL_BLUE = 13,
+    BLOCK_VIRTURL_YELLOW = 14,
     //Wall Kick
     ZERO_TO_R = 0,
     R_TO_ZERO = 1,

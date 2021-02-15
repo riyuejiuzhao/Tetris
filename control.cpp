@@ -1,5 +1,7 @@
 #include "control.hpp"
 #include "TBlock.hpp"
+#include "LBlock.hpp"
+#include "JBlock.hpp"
 #include <unistd.h>
 #include <assert.h>
 
@@ -13,17 +15,18 @@ WINDOW *gameMainWin = nullptr; //放方块的地方
 Block *getNextBlock()
 {
     Block *temp;
-    static int i=1;
+    static int i=0;
     if(i==0)
-    {
-        i=1;
-        temp = new LongBlock(bg);
-    }
-    else
-    {
-        i=0;
         temp = new TBlock(bg);
-    }
+    else if(i==1)
+        temp = new JBlock(bg);
+    else if(i==2)
+        temp = new LBlock(bg);
+    else if(i==3)
+        temp = new LongBlock(bg);
+    else
+        temp = new TBlock(bg);
+    i=(i+1)%4;
     return temp;
 }
 

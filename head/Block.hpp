@@ -21,6 +21,7 @@ enum class BlockType
     Long,
     T,
     J,
+    L,
 };
 
 class Block
