@@ -14,10 +14,11 @@ void initColor()
     init_pair(BLOCK_VIRTURL_CYAN, COLOR_CYAN, COLOR_BLACK);
     init_pair(BLOCK_MAGENTA, COLOR_MAGENTA, COLOR_MAGENTA);
     init_pair(BLOCK_VIRTURL_MAGENTA, COLOR_MAGENTA, COLOR_BLACK);
-    init_pair(BLOCK_BLUE,COLOR_BLUE,COLOR_BLUE);
-    init_pair(BLOCK_VIRTURL_BLUE,COLOR_BLUE,COLOR_BLACK);
-    init_pair(BLOCK_YELLOW,COLOR_YELLOW,COLOR_YELLOW);
-    init_pair(BLOCK_VIRTURL_YELLOW,COLOR_YELLOW,COLOR_BLACK);
+    init_pair(BLOCK_BLUE, COLOR_BLUE, COLOR_BLUE);
+    init_pair(BLOCK_VIRTURL_BLUE, COLOR_BLUE, COLOR_BLACK);
+    //没有橘色，用白色
+    init_pair(BLOCK_ORANGE, COLOR_WHITE, COLOR_WHITE);
+    init_pair(BLOCK_VIRTURL_ORANGE, COLOR_WHITE, COLOR_BLACK);
 }
 
 void gameInit()
@@ -43,6 +44,7 @@ void gameInit()
 
 void gameEnd()
 {
+    endwin();
 }
 
 int main(int argc, char *argv[])

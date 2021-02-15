@@ -199,7 +199,7 @@ LBlock::~LBlock()
 }
 
 LBlock::LBlock(Background &bg)
-    : Block(bg, BLOCK_YELLOW, BLOCK_VIRTURL_YELLOW)
+    : Block(bg, BLOCK_ORANGE, BLOCK_VIRTURL_ORANGE)
 {
 }
 

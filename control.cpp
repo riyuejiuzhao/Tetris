@@ -98,6 +98,7 @@ void gameMainProcess()
 
     pthread_mutex_init(&blockLock, nullptr);
     pthread_create(&pid, nullptr, keyboardControlProcess, nullptr);
+    pthread_detach(pid);
 
     while (1)
     {
