@@ -38,6 +38,7 @@ public:
     Background();
     ~Background();
     void printBackground(WINDOW *win);
+    bool canRemoveLine(int num);
     //允许直接操作显示的字符串
     std::vector<BackgroundPoint> &operator[](int i);
 };

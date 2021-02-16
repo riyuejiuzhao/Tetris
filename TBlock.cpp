@@ -1,7 +1,7 @@
 #include "TBlock.hpp"
 
 TBlock::TBlock(Background &background)
-    : Block(background, BLOCK_MAGENTA, BLOCK_VIRTURL_MAGENTA, NEW_LONG_BLOCK_X, NEW_LONG_BLOCK_Y) {}
+    : Block(background, BLOCK_MAGENTA, BLOCK_VIRTURL_MAGENTA, NEW_I_BLOCK_X, NEW_I_BLOCK_Y) {}
 
 TBlock::~TBlock() {}
 

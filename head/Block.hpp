@@ -18,10 +18,13 @@ enum class BlockDirection
 };
 enum class BlockType
 {
-    Long,
+    I,
     T,
     J,
     L,
+    O,
+    S,
+    Z,
 };
 
 class Block
@@ -36,7 +39,6 @@ protected:
           int x = NEW_BLOCK_X, int y = NEW_BLOCK_Y,
           BlockDirection d = BlockDirection::DOWN);
     inline bool canMoveDown(int x, int y) { return canMove(x + 1, y, direction); }
-    inline bool canMoveDown() { return canMoveDown(nowX, nowY); }
     inline bool canMoveRight() { return canMove(nowX, nowY + 2, direction); }
     inline bool canMoveLeft() { return canMove(nowX, nowY - 2, direction); }
     bool moveDown();
@@ -55,6 +57,7 @@ public:
     bool move(BlockDirection t);
     void moveToBottom();
     bool turn(BlockDirection d);
+    inline bool canMoveDown() { return canMoveDown(nowX, nowY); }
 
     virtual BlockType getType() = 0;
     virtual void stopMove() = 0; //写入背景

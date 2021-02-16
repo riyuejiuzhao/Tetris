@@ -1,11 +1,11 @@
-#include "LongBlock.hpp"
+#include "IBlock.hpp"
 
-LongBlock::LongBlock(Background &background)
-    : Block(background, BLOCK_CYAN, BLOCK_VIRTURL_CYAN, NEW_LONG_BLOCK_X, NEW_LONG_BLOCK_Y) {}
+IBlock::IBlock(Background &background)
+    : Block(background, BLOCK_CYAN, BLOCK_VIRTURL_CYAN, NEW_I_BLOCK_X, NEW_I_BLOCK_Y) {}
 
-LongBlock::~LongBlock() {}
+IBlock::~IBlock() {}
 
-void LongBlock::printInNow(WINDOW *win)
+void IBlock::printInNow(WINDOW *win)
 {
     char blockChar = ' ';
     wattron(win, COLOR_PAIR(blockColor));
@@ -70,7 +70,7 @@ void LongBlock::printInNow(WINDOW *win)
     wattroff(win, COLOR_PAIR(blockColor));
 }
 
-void LongBlock::printInBottom(WINDOW *win)
+void IBlock::printInBottom(WINDOW *win)
 {
     char blockCharLeft = '[';
     char blockCharRight = ']';
@@ -143,12 +143,12 @@ void LongBlock::printInBottom(WINDOW *win)
     wattroff(win, COLOR_PAIR(virtualColor));
 }
 
-BlockType LongBlock::getType()
+BlockType IBlock::getType()
 {
-    return BlockType::Long;
+    return BlockType::I;
 }
 
-void LongBlock::stopMove()
+void IBlock::stopMove()
 {
     BackgroundPoint temp(blockColor, ' ');
     int x = nowX, y = nowY;
@@ -210,7 +210,7 @@ void LongBlock::stopMove()
     }
 }
 
-bool LongBlock::canMove(int x, int y, BlockDirection d)
+bool IBlock::canMove(int x, int y, BlockDirection d)
 {
     if (d == BlockDirection::DOWN)
     {
@@ -274,7 +274,7 @@ bool LongBlock::canMove(int x, int y, BlockDirection d)
     }
 }
 
-inline bool LongBlock::childTurn(int to, int ox, int oy, BlockDirection dir)
+inline bool IBlock::childTurn(int to, int ox, int oy, BlockDirection dir)
 {
     return grandChildTurn(to, 0, ox, oy, dir) ||
            grandChildTurn(to, 1, ox, oy, dir) ||
@@ -283,7 +283,7 @@ inline bool LongBlock::childTurn(int to, int ox, int oy, BlockDirection dir)
            grandChildTurn(to, 4, ox, oy, dir);
 }
 
-inline bool LongBlock::grandChildTurn(int to, int index, int ox, int oy, BlockDirection dir)
+inline bool IBlock::grandChildTurn(int to, int index, int ox, int oy, BlockDirection dir)
 {
     if (canMove(nowX + ox + getIWallKickX(to, index),
                 nowY + oy + getIWallKickY(to, index), dir))
@@ -296,7 +296,7 @@ inline bool LongBlock::grandChildTurn(int to, int index, int ox, int oy, BlockDi
     return false;
 }
 
-bool LongBlock::turnLeft()
+bool IBlock::turnLeft()
 {
     int ox, oy;
     if (direction == ZERO)
@@ -324,7 +324,7 @@ bool LongBlock::turnLeft()
 }
 
 //由于I块的中心点不在块上，所以会调整nowX，nowY
-bool LongBlock::turnRight()
+bool IBlock::turnRight()
 {
     int ox, oy;
     if (direction == ZERO) // 0 -> R

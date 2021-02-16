@@ -19,6 +19,13 @@ void initColor()
     //没有橘色，用白色
     init_pair(BLOCK_ORANGE, COLOR_WHITE, COLOR_WHITE);
     init_pair(BLOCK_VIRTURL_ORANGE, COLOR_WHITE, COLOR_BLACK);
+
+    init_pair(BLOCK_YELLOW,COLOR_YELLOW,COLOR_YELLOW);
+    init_pair(BLOCK_VIRTURL_YELLOW,COLOR_YELLOW,COLOR_BLACK);
+    init_pair(BLOCK_GREEN,COLOR_GREEN,COLOR_GREEN);
+    init_pair(BLOCK_VIRTURL_GREE,COLOR_GREEN,COLOR_BLACK);
+    init_pair(BLOCK_RED,COLOR_RED,COLOR_RED);
+    init_pair(BLOCK_VIRTUAL_RED,COLOR_RED,COLOR_BLACK);
 }
 
 void gameInit()
@@ -40,11 +47,6 @@ void gameInit()
     noecho();
     clear();
     refresh();
-}
-
-void gameEnd()
-{
-    endwin();
 }
 
 int main(int argc, char *argv[])
@@ -175,7 +177,6 @@ int main(int argc, char *argv[])
     //    }
 
     gameMainProcess();
-    gameEnd();
 
     return 0;
 }

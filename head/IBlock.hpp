@@ -3,7 +3,7 @@
 #define LONGBLOCK_H
 #include "Block.hpp"
 
-class LongBlock : public Block
+class IBlock : public Block
 {
     void printInNow(WINDOW *win) override;
     void printInBottom(WINDOW *win) override;
@@ -15,8 +15,8 @@ class LongBlock : public Block
     bool childTurn(int to, int ox, int oy, BlockDirection dir);
 
 public:
-    ~LongBlock();
-    LongBlock(Background &bg);
+    ~IBlock();
+    IBlock(Background &bg);
     BlockType getType() override;
     void stopMove() override;
 };

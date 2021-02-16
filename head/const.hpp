@@ -19,8 +19,8 @@ enum
     NEW_BLOCK_X = 0 + BACKGROUND_CEIL, //距离顶端的距离
     NEW_BLOCK_Y = 10,                  //距离边缘的距离
     //不同的方块由于用来定位的块不同，需要有不同的初始位置
-    NEW_LONG_BLOCK_X = 0 + BACKGROUND_CEIL,
-    NEW_LONG_BLOCK_Y = 2 + 2 * 4,
+    NEW_I_BLOCK_X = 0 + BACKGROUND_CEIL,
+    NEW_I_BLOCK_Y = 2 + 2 * 4,
     //颜色
     //定义背景颜色
     BACKGROUND_COLOR = 0,
@@ -29,12 +29,18 @@ enum
     BLOCK_MAGENTA = 2,
     BLOCK_BLUE = 3,
     BLOCK_ORANGE = 4, 
+    BLOCK_YELLOW = 5,
+    BLOCK_GREEN = 6,
+    BLOCK_RED = 7,
     //这里时方块还没有落下时， 
     //程序给玩家一个预览
     BLOCK_VIRTURL_CYAN = 11,
     BLOCK_VIRTURL_MAGENTA = 12,
     BLOCK_VIRTURL_BLUE = 13,
     BLOCK_VIRTURL_ORANGE = 14,
+    BLOCK_VIRTURL_YELLOW = 15,
+    BLOCK_VIRTURL_GREE = 16,
+    BLOCK_VIRTUAL_RED = 17,
     //Wall Kick
     ZERO_TO_R = 0,
     R_TO_ZERO = 1,

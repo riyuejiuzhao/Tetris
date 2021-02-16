@@ -2,6 +2,9 @@
 #include "TBlock.hpp"
 #include "LBlock.hpp"
 #include "JBlock.hpp"
+#include "SBlock.hpp"
+#include "ZBlock.hpp"
+#include "OBlock.hpp"
 #include <unistd.h>
 #include <assert.h>
 
@@ -11,23 +14,58 @@ Block *now = getNextBlock();
 WINDOW *gameOutWin = nullptr;  //外面的边框
 WINDOW *gameMainWin = nullptr; //放方块的地方
 
+void winClear(WINDOW *t, int height, int width)
+{
+    for (int i = 0; i < height; ++i)
+    {
+        for (int j = 0; j < width; ++j)
+            mvwaddch(t, i, j, ' ');
+    }
+    wrefresh(t);
+}
+
+void gameEnd()
+{
+    winClear(gameMainWin,BACKGROUND_HEIGHT,BACKGROUND_WIDTH);
+    for(int i=0;i<2;++i)
+    {
+        usleep(500000);
+        bg.printBackground(gameMainWin);
+        wrefresh(gameMainWin);
+        usleep(500000);
+        winClear(gameMainWin,BACKGROUND_HEIGHT,BACKGROUND_WIDTH);
+    }
+    mvwaddstr(gameMainWin, 0, 0, "Game Over");
+    wrefresh(gameMainWin);
+    getch();
+    endwin();
+    exit(0);
+}
+
 //后面还需要在修改
 Block *getNextBlock()
 {
     Block *temp;
-    static int i=0;
-    if(i==0)
+    static int i = 0;
+    if (i == 0)
         temp = new TBlock(bg);
-    else if(i==1)
+    else if (i == 1)
         temp = new JBlock(bg);
-    else if(i==2)
+    else if (i == 2)
         temp = new LBlock(bg);
-    else if(i==3)
-        temp = new LongBlock(bg);
+    else if (i == 3)
+        temp = new IBlock(bg);
+    else if (i == 4)
+        temp = new SBlock(bg);
+    else if (i == 5)
+        temp = new OBlock(bg);
     else
-        temp = new TBlock(bg);
-    i=(i+1)%4;
-    return temp;
+        temp = new ZBlock(bg);
+    i = (i + 1) % 7;
+    if (temp->canMoveDown())
+        return temp;
+    else
+        return nullptr;
 }
 
 void *keyboardControlProcess(void *arg)
@@ -67,6 +105,8 @@ void *keyboardControlProcess(void *arg)
             now->stopMove();
             delete now;
             now = getNextBlock();
+            if (now == nullptr)
+                return nullptr;
             bg.printBackground(gameMainWin);
             now->printBlock(gameMainWin);
             wrefresh(gameMainWin);
@@ -75,10 +115,10 @@ void *keyboardControlProcess(void *arg)
             break;
         }
         char message[100];
-        sprintf(message,"                             \n                             ");
-        mvaddstr(0,0,message);
-        sprintf(message,"%s\n, x:%d, y:%d",now->getDirection().c_str(),now->getX(),now->getY());
-        mvaddstr(0,0,message);
+        sprintf(message, "                             \n                             ");
+        mvaddstr(0, 0, message);
+        sprintf(message, "%s\n, x:%d, y:%d", now->getDirection().c_str(), now->getX(), now->getY());
+        mvaddstr(0, 0, message);
         pthread_mutex_unlock(&blockLock);
     }
     return nullptr;
@@ -100,7 +140,7 @@ void gameMainProcess()
     pthread_create(&pid, nullptr, keyboardControlProcess, nullptr);
     pthread_detach(pid);
 
-    while (1)
+    while (now!=nullptr)
     {
         pthread_mutex_lock(&blockLock);
 
@@ -109,6 +149,8 @@ void gameMainProcess()
             now->stopMove();
             delete now;
             now = getNextBlock();
+            if (now == nullptr)
+                gameEnd();
         }
         bg.printBackground(gameMainWin);
         now->printBlock(gameMainWin);
@@ -117,4 +159,5 @@ void gameMainProcess()
         pthread_mutex_unlock(&blockLock);
         sleep(1);
     }
+    gameEnd();
 }
