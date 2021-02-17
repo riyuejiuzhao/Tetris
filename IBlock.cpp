@@ -148,7 +148,7 @@ BlockType IBlock::getType()
     return BlockType::I;
 }
 
-void IBlock::stopMove()
+void IBlock::doStopMove()
 {
     BackgroundPoint temp(blockColor, ' ');
     int x = nowX, y = nowY;

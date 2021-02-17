@@ -50,6 +50,7 @@ protected:
     //这两个函数I型需要重置，别的不需要
     virtual bool turnLeft();
     virtual bool turnRight();
+    virtual void doStopMove() = 0;
 
 public:
     virtual ~Block();
@@ -60,13 +61,12 @@ public:
     inline bool canMoveDown() { return canMoveDown(nowX, nowY); }
 
     virtual BlockType getType() = 0;
-    virtual void stopMove() = 0; //写入背景
+    void stopMove(); //写入背景
 
     //辅助函数用来实现turn的, I型块用自己的，其余的用这个
     friend bool originGrandChildTurn(Block *t, int to, int index, int ox, int oy, BlockDirection dir);
     friend bool originChildTurn(Block *t, int to, int ox, int oy, BlockDirection dir);
 
-    //3个用来debug的函数
     inline int getX() { return nowX; }
     inline int getY() { return nowY; }
     inline std::string getDirection()

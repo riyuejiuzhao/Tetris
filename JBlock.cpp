@@ -206,7 +206,7 @@ BlockType JBlock::getType()
     return BlockType::J;
 }
 
-void JBlock::stopMove()
+void JBlock::doStopMove()
 {
     BackgroundPoint temp(blockColor, ' ');
     int x = nowX, y = nowY;

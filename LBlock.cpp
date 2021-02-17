@@ -208,7 +208,7 @@ BlockType LBlock::getType()
     return BlockType::L;
 }
 
-void LBlock::stopMove()
+void LBlock::doStopMove()
 {
     BackgroundPoint temp(blockColor,' ');
     int x=nowX,y=nowY;

@@ -44,3 +44,31 @@ std::vector<BackgroundPoint> &Background::operator[](int i)
     }
     return background[i];
 }
+
+bool Background::isFullLine(int x)
+{
+    for (auto i = background[x].begin(); i != background[x].end(); ++i)
+    {
+        if ((*i).isEmpty())
+            return false;
+    }
+    return true;
+}
+
+void Background::removeLine(int x)
+{
+    for (; x >= 1; --x)
+    {
+        background[x] = background[x - 1];
+    }
+}
+
+void Background::removeLines(int x) //这里x是方块的中心坐标，所以最大删除范围是[x-2,x+2]
+{
+    int i = x - 2;
+    for (; i <= x + 2 && i < BACKGROUND_HEIGHT; ++i)
+    {
+        if (isFullLine(i))
+            removeLine(i);
+    }
+}

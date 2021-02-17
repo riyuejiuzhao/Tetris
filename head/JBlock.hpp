@@ -13,6 +13,6 @@ public:
     ~JBlock();
     JBlock(Background &bg);
     BlockType getType() override;
-    void stopMove() override;
+    void doStopMove() override;
 };
 #endif

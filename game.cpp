@@ -1,4 +1,5 @@
 #include "background.hpp"
+#include "OBlock.hpp"
 #include "Block.hpp"
 #include "control.hpp"
 #include <pthread.h>
@@ -52,6 +53,8 @@ void gameInit()
 int main(int argc, char *argv[])
 {
     gameInit();
+    gameMainProcess();
+
     //    int ch;
     //    int height = BACKGROUND_HEIGHT, weight = BACKGROUND_WIDTH,
     //        x = BACKGROUND_LEFT, y = BACKGROUND_TOP;
@@ -175,8 +178,5 @@ int main(int argc, char *argv[])
     //            break;
     //        }
     //    }
-
-    gameMainProcess();
-
     return 0;
 }

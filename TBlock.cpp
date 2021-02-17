@@ -180,7 +180,7 @@ bool TBlock::canMove(int x, int y, BlockDirection d)
                bg[x + 1][y].isEmpty() &&
                bg[x + 1][y + 1].isEmpty();
     else if (d == TWO)
-        return inBackground(x, x + 1, y - 3, y + 3) &&
+        return inBackground(x, x + 1, y - 2, y + 3) &&
                bg[x][y - 2].isEmpty() &&
                bg[x][y - 1].isEmpty() &&
 
@@ -201,7 +201,7 @@ BlockType TBlock::getType()
     return BlockType::T;
 }
 
-void TBlock::stopMove()
+void TBlock::doStopMove()
 {
     BackgroundPoint temp(blockColor, ' ');
     int x = nowX, y = nowY;

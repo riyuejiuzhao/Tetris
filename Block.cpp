@@ -114,3 +114,9 @@ bool originChildTurn(Block *t, int to, int ox, int oy, BlockDirection dir)
            originGrandChildTurn(t, to, 3, ox, oy, dir) ||
            originGrandChildTurn(t, to, 4, ox, oy, dir);
 }
+
+void Block::stopMove()
+{
+    doStopMove();
+    bg.removeLines(nowX);
+}

@@ -33,12 +33,13 @@ class Background
     //禁止进行拷贝构造和移动构造
     Background &operator=(Background &t);
     Background(Background &t);
-
+    bool isFullLine(int x);
+    void removeLine(int x);
 public:
     Background();
     ~Background();
     void printBackground(WINDOW *win);
-    bool canRemoveLine(int num);
+    void removeLines(int x);
     //允许直接操作显示的字符串
     std::vector<BackgroundPoint> &operator[](int i);
 };

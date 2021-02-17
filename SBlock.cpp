@@ -210,7 +210,7 @@ BlockType SBlock::getType()
     return BlockType::S;
 }
 
-void SBlock::stopMove()
+void SBlock::doStopMove()
 {
     BackgroundPoint temp(blockColor, ' ');
     int x = nowX, y = nowY;

@@ -72,7 +72,7 @@ BlockType OBlock::getType()
     return BlockType::O;
 }
 
-void OBlock::stopMove()
+void OBlock::doStopMove()
 {
     BackgroundPoint temp(blockColor, ' ');
     int x = nowX, y = nowY;

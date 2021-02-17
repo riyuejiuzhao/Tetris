@@ -207,7 +207,7 @@ BlockType ZBlock::getType()
     return BlockType::Z;
 }
 
-void ZBlock::stopMove()
+void ZBlock::doStopMove()
 {
     BackgroundPoint temp(blockColor, ' ');
     int x = nowX, y = nowY;
