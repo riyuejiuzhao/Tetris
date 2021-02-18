@@ -274,7 +274,7 @@ bool IBlock::canMove(int x, int y, BlockDirection d)
     }
 }
 
-inline bool IBlock::childTurn(int to, int ox, int oy, BlockDirection dir)
+bool IBlock::childTurn(int to, int ox, int oy, BlockDirection dir)
 {
     return grandChildTurn(to, 0, ox, oy, dir) ||
            grandChildTurn(to, 1, ox, oy, dir) ||
@@ -283,7 +283,7 @@ inline bool IBlock::childTurn(int to, int ox, int oy, BlockDirection dir)
            grandChildTurn(to, 4, ox, oy, dir);
 }
 
-inline bool IBlock::grandChildTurn(int to, int index, int ox, int oy, BlockDirection dir)
+bool IBlock::grandChildTurn(int to, int index, int ox, int oy, BlockDirection dir)
 {
     if (canMove(nowX + ox + getIWallKickX(to, index),
                 nowY + oy + getIWallKickY(to, index), dir))

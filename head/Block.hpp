@@ -126,20 +126,11 @@ inline int getIWallKickX(int d, int i)
     return IBlockWillKicks[d][i][1];
 }
 
-inline int getIWallKickY(int d, int i)
-{
-    return IBlockWillKicks[d][i][0] * 2;
-}
+inline int getIWallKickY(int d, int i) { return IBlockWillKicks[d][i][0] * 2; }
 
-inline int getJLSTZWallKickX(int d, int i)
-{
-    return JLSTZBlockWillKicks[d][i][1];
-}
+inline int getJLSTZWallKickX(int d, int i) { return JLSTZBlockWillKicks[d][i][1]; }
 
-inline int getJLSTZWallKickY(int d, int i)
-{
-    return JLSTZBlockWillKicks[d][i][0] * 2;
-}
+inline int getJLSTZWallKickY(int d, int i) { return JLSTZBlockWillKicks[d][i][0] * 2; }
 
 inline bool inBackground(int minX, int maxX, int minY, int maxY)
 {

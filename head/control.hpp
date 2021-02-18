@@ -5,7 +5,6 @@
 
 #include"background.hpp"
 #include"Block.hpp"
-#include "IBlock.hpp"
 
 void gameMainProcess();
 Block * getNextBlock();

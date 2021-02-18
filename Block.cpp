@@ -33,7 +33,7 @@ bool Block::moveRight()
     return true;
 }
 
-inline bool Block::moveLeft()
+bool Block::moveLeft()
 {
     if (!canMoveLeft())
         return false;

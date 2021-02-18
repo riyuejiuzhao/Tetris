@@ -1,12 +1,6 @@
-#include "background.hpp"
-#include "OBlock.hpp"
-#include "Block.hpp"
 #include "control.hpp"
-#include <pthread.h>
-#include <unistd.h>
-#include <stdio.h>
+#include "random.hpp"
 #include <ncurses.h>
-#include <stdlib.h>
 
 void initColor()
 {
@@ -21,12 +15,12 @@ void initColor()
     init_pair(BLOCK_ORANGE, COLOR_WHITE, COLOR_WHITE);
     init_pair(BLOCK_VIRTURL_ORANGE, COLOR_WHITE, COLOR_BLACK);
 
-    init_pair(BLOCK_YELLOW,COLOR_YELLOW,COLOR_YELLOW);
-    init_pair(BLOCK_VIRTURL_YELLOW,COLOR_YELLOW,COLOR_BLACK);
-    init_pair(BLOCK_GREEN,COLOR_GREEN,COLOR_GREEN);
-    init_pair(BLOCK_VIRTURL_GREE,COLOR_GREEN,COLOR_BLACK);
-    init_pair(BLOCK_RED,COLOR_RED,COLOR_RED);
-    init_pair(BLOCK_VIRTUAL_RED,COLOR_RED,COLOR_BLACK);
+    init_pair(BLOCK_YELLOW, COLOR_YELLOW, COLOR_YELLOW);
+    init_pair(BLOCK_VIRTURL_YELLOW, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(BLOCK_GREEN, COLOR_GREEN, COLOR_GREEN);
+    init_pair(BLOCK_VIRTURL_GREE, COLOR_GREEN, COLOR_BLACK);
+    init_pair(BLOCK_RED, COLOR_RED, COLOR_RED);
+    init_pair(BLOCK_VIRTUAL_RED, COLOR_RED, COLOR_BLACK);
 }
 
 void gameInit()
@@ -54,6 +48,30 @@ int main(int argc, char *argv[])
 {
     gameInit();
     gameMainProcess();
+
+//    RandomBlock t;
+//    for (int i = 0; i < 10; ++i)
+//    {
+//        for (int j = 0; j < 7; ++j)
+//        {
+//            Block *temp = t.getNext();
+//            if (temp->getType() == BlockType::I)
+//                printf("I, ");
+//            else if (temp->getType() == BlockType::J)
+//                printf("J, ");
+//            else if (temp->getType() == BlockType::L)
+//                printf("L, ");
+//            else if (temp->getType() == BlockType::O)
+//                printf("O, ");
+//            else if (temp->getType() == BlockType::S)
+//                printf("S, ");
+//            else if (temp->getType() == BlockType::T)
+//                printf("T, ");
+//            else if (temp->getType() == BlockType::Z)
+//                printf("Z, ");
+//        }
+//        printf("\n");
+//    }
 
     //    int ch;
     //    int height = BACKGROUND_HEIGHT, weight = BACKGROUND_WIDTH,

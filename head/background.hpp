@@ -2,7 +2,6 @@
 
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
-#include <stdio.h>
 #include <ncurses.h>
 #include <memory>
 #include "Block.hpp"
@@ -29,14 +28,15 @@ public:
 
 class Background
 {
+
     std::vector<std::vector<BackgroundPoint>> background;
-    //禁止进行拷贝构造和移动构造
-    Background &operator=(Background &t);
-    Background(Background &t);
     bool isFullLine(int x);
     void removeLine(int x);
-public:
+    //单例模式
     Background();
+public:
+    static Background& getbg();
+
     ~Background();
     void printBackground(WINDOW *win);
     void removeLines(int x);

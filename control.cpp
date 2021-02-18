@@ -1,15 +1,9 @@
 #include "control.hpp"
-#include "TBlock.hpp"
-#include "LBlock.hpp"
-#include "JBlock.hpp"
-#include "SBlock.hpp"
-#include "ZBlock.hpp"
-#include "OBlock.hpp"
 #include <unistd.h>
-#include <assert.h>
+#include "random.hpp"
 
 pthread_mutex_t blockLock;
-Background bg;
+Background& bg = Background::getbg();
 Block *now = getNextBlock();
 WINDOW *gameOutWin = nullptr;  //外面的边框
 WINDOW *gameMainWin = nullptr; //放方块的地方
@@ -45,27 +39,29 @@ void gameEnd()
 //后面还需要在修改
 Block *getNextBlock()
 {
-    Block *temp;
-    static int i = 0;
-    if (i == 0)
-        temp = new TBlock(bg);
-    else if (i == 1)
-        temp = new JBlock(bg);
-    else if (i == 2)
-        temp = new LBlock(bg);
-    else if (i == 3)
-        temp = new IBlock(bg);
-    else if (i == 4)
-        temp = new SBlock(bg);
-    else if (i == 5)
-        temp = new OBlock(bg);
-    else
-        temp = new ZBlock(bg);
-    i = (i + 1) % 7;
-    if (temp->canMoveDown())
-        return temp;
-    else
-        return nullptr;
+    static RandomBlock rb;
+    return rb.getNext();
+//    Block *temp;
+//    static int i = 0;
+//    if (i == 0)
+//        temp = new TBlock(bg);
+//    else if (i == 1)
+//        temp = new JBlock(bg);
+//    else if (i == 2)
+//        temp = new LBlock(bg);
+//    else if (i == 3)
+//        temp = new IBlock(bg);
+//    else if (i == 4)
+//        temp = new SBlock(bg);
+//    else if (i == 5)
+//        temp = new OBlock(bg);
+//    else
+//        temp = new ZBlock(bg);
+//    i = (i + 1) % 7;
+//    if (temp->canMoveDown())
+//        return temp;
+//    else
+//        return nullptr;
 }
 
 void *keyboardControlProcess(void *arg)

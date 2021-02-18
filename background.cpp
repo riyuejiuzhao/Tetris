@@ -2,6 +2,16 @@
 #include "Block.hpp"
 #include "const.hpp"
 
+Background& Background::getbg()
+{
+    static Background* bg = nullptr;
+    if(bg == nullptr)
+    {
+        bg = new Background();
+    }
+    return *bg;
+}
+
 Background::Background()
 {
     for (int i = 0; i < BACKGROUND_HEIGHT; ++i)
