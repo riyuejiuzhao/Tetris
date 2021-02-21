@@ -156,7 +156,7 @@ bool ZBlock::canMove(int x, int y, BlockDirection d)
     }
     else if (d == R)
     {
-        return inBackground(x - 1, x, y, y + 3) &&
+        return inBackground(x - 1, x + 1, y, y + 3) &&
                bg[x][y].isEmpty() &&
                bg[x][y + 1].isEmpty() &&
 

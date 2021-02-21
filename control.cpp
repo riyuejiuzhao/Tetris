@@ -20,6 +20,8 @@ void winClear(WINDOW *t, int height, int width)
 
 void gameEnd()
 {
+    now->stopMove();
+    delete now;
     winClear(gameMainWin,BACKGROUND_HEIGHT,BACKGROUND_WIDTH);
     for(int i=0;i<2;++i)
     {
@@ -40,7 +42,13 @@ void gameEnd()
 Block *getNextBlock()
 {
     static RandomBlock rb;
-    return rb.getNext();
+    Block *t = rb.getNext();
+    if(!t->canMoveDown())
+    {
+        now = t;
+        gameEnd();
+    }
+    return t;
 //    Block *temp;
 //    static int i = 0;
 //    if (i == 0)

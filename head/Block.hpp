@@ -47,10 +47,10 @@ protected:
     virtual void printInNow(WINDOW *win) = 0;
     virtual void printInBottom(WINDOW *win) = 0;
     virtual bool canMove(int x, int y, BlockDirection d) = 0;
+    virtual void doStopMove() = 0;
     //这两个函数I型需要重置，别的不需要
     virtual bool turnLeft();
     virtual bool turnRight();
-    virtual void doStopMove() = 0;
 
 public:
     virtual ~Block();
